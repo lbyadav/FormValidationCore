@@ -1,0 +1,97 @@
+﻿@model FormValidation.Models.usermodel 
+ 
+
+@{
+    ViewData["Title"] = "SingUp";
+}
+
+<h1>SingUp</h1>
+
+<h4>usermodel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="SingUp">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConfirmPassword" class="control-label"></label>
+                <input asp-for="ConfirmPassword" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+
+            <div class="form-group"> 
+                     <label asp-for="CountryName" class="control-label">Country</label> 
+                     <select asp-for="CountryName" asp-items="ViewBag.CountryId" class="form-control">
+                         <option value="">Select Country</option>
+                         <option value="">Select Country</option>
+                         <option value="">Select Country</option>
+                         <option value="">Select Country</option>
+                     </select>  
+             </div>
+             <div class="form-group"> 
+                     <label asp-for="CityName" class="control-label">City</label> 
+                     <select asp-for="CityName" class="form-control"></select> 
+             </div>
+
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Contacts" class="control-label"></label>
+                <input asp-for="Contacts" class="form-control" />
+                <span asp-validation-for="Contacts" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Terms" />
+                    <span asp-validation-for="Terms" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="SinghUp" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+
+        
+     $(function () {
+         $("select#CountryId").change(function () {
+             var cid = $(this).val();
+
+             $("select#CityId").empty();
+
+             $.getJSON(`/Home/GetCity?cid=${cid}`, function (data) {
+                 //console.log(data);
+                 $.each(data, function (i, item) {
+                     $("select#CityId").append(`<option value="${item.id}">${item.name}</option>`);
+                 });
+             });
+         })
+     });
+ 
+
+    </script>
+}
+
